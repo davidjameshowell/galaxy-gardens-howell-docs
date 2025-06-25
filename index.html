@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Gardens - Howell Rework</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for the video container to maintain aspect ratio */
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white antialiased">
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8 md:py-12">
+
+        <!-- Header Section -->
+        <header class="text-center mb-10 md:mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-cyan-400">Galaxy Gardens</h1>
+            <p class="text-xl md:text-2xl text-gray-300 mt-2">Howell Property Rework Items</p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main>
+            <div id="issue-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Issues will be dynamically inserted here by JavaScript -->
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="text-center mt-12 text-gray-500">
+            <p>&copy; 2024 Galaxy Gardens. All rework items documented.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Data for the landscaping issues, now with a notes field
+        const issues = [
+            {
+                title: "Grading Conditions",
+                videoUrl: "https://iframe.mediadelivery.net/embed/459442/a9536710-b03e-42eb-8a1e-ba4583d54a12?autoplay=false&loop=false&muted=false&preload=true&responsive=true",
+                notes: "The ground currently slopes towards the foundation. The mulch needs to be regraded to create a positive slope away from the house, ensuring proper water drainage."
+            },
+            {
+                title: "Basin Depth & Mulch Levels",
+                videoUrl: "https://iframe.mediadelivery.net/embed/459442/7a8af374-2269-4e7a-8892-3ff3528e9204?autoplay=false&loop=false&muted=false&preload=true&responsive=true",
+                notes: "Mulch was piled too high against plant stems. The large basin is still at a depth that makes it inaccesible to reach plants from wtihin; maybe move mulch from smaller basin the larger to redistribute?"
+            },
+            {
+                title: "Basin Retainer Back Leveling",
+                videoUrl: "https://iframe.mediadelivery.net/embed/459442/1610058d-a9a8-4e1d-943a-2e5c6a8073d4?autoplay=false&loop=false&muted=false&preload=true&responsive=true",
+                notes: "The soil behind the basin retaining wall is not level, causing an uneven appearance."
+            },
+            {
+                title: "Downspout Backsplash",
+                videoUrl: "https://iframe.mediadelivery.net/embed/459442/a4441f26-d963-4d18-ae38-0d74284f6ddd?autoplay=false&loop=false&muted=false&preload=true&responsive=true",
+                notes: "Water from the downspout is causing backsplash against the foundation."
+            },
+            {
+                title: "Popup Valve Misconfiguration",
+                videoUrl: "https://iframe.mediadelivery.net/embed/459442/b8245f2c-144a-4552-b94b-8ed9709432b2?autoplay=false&loop=false&muted=false&preload=true&responsive=true",
+                notes: "The pop-up drainage valve is incorrectly installed, preventing it from opening properly under water pressure."
+            }
+        ];
+
+        // Function to create and append issue cards to the list
+        function displayIssues() {
+            const issueListContainer = document.getElementById('issue-list');
+            if (!issueListContainer) return;
+
+            issues.forEach((issue, index) => {
+                // Create the main card container
+                const card = document.createElement('div');
+                card.className = "bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col";
+
+                // Create the video container
+                const videoWrapper = document.createElement('div');
+                videoWrapper.className = 'video-container';
+
+                const iframe = document.createElement('iframe');
+                iframe.src = issue.videoUrl;
+                iframe.loading = 'lazy';
+                iframe.allow = "accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;";
+                iframe.allowFullscreen = true;
+                
+                videoWrapper.appendChild(iframe);
+
+                // Create the content container for the title and notes
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'p-5 flex-grow';
+
+                // Create the title element
+                const title = document.createElement('h3');
+                title.className = 'text-lg font-semibold text-white';
+                title.textContent = issue.title;
+
+                // Create the notes section (always visible)
+                const notesWrapper = document.createElement('div');
+                notesWrapper.className = 'mt-3 pt-3 border-t border-gray-600';
+
+                // Create paragraph for notes
+                const notesText = document.createElement('p');
+                notesText.className = "text-gray-300";
+                notesText.textContent = issue.notes;
+                
+                notesWrapper.appendChild(notesText);
+                
+                // Assemble the card
+                card.appendChild(videoWrapper);
+                contentDiv.appendChild(title);
+                contentDiv.appendChild(notesWrapper); // Add notes section directly
+                card.appendChild(contentDiv);
+                
+                issueListContainer.appendChild(card);
+            });
+        }
+
+        // Run the function when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', displayIssues);
+    </script>
+
+</body>
+</html>
